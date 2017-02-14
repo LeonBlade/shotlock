@@ -1,0 +1,28 @@
+{
+  "name": "shotlock",
+  "version": "1.0.0",
+  "description": "Take screenshots locked at a specific region of your computer.",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "James Stine",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.23.0",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-postcss": "^6.3.0",
+    "gulp-pug": "^3.2.0",
+    "postcss": "^5.2.12"
+  },
+  "babel": {
+    "plugins": [
+      "transform-es2015-modules-commonjs"
+    ]
+  }
+}
