@@ -1,0 +1,8 @@
+/* allows element to be held down to drag the current window */
+.webkit-drag {
+    -webkit-app-region: drag;
+    cursor: -webkit-drag;
+}
+
+/* hide element */
+.hidden { display: none !important; }

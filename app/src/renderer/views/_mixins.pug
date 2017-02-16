@@ -1,0 +1,34 @@
+//- **
+    name: icon
+    description: Allows to easily import SVG images
+    @param {string} name
+mixin icon(name)
+    img(src=`/app/static/${name}.svg`)&attributes(attributes)
+
+//- **
+    name: window-header
+    description: Used to create header space on frameless applications
+mixin window-header
+    - var a = attributes
+    header.window-header(class!=a.class)
+        .title-bar
+            .title-bar__controls
+                +icon('traffic-light-close').close-window
+                +icon('traffic-light-disabled')
+                +icon('traffic-light-disabled')
+            span.window__title.txt= a.title
+    block
+
+//- **
+    name: stylesheet
+    description: Fast stylesheet tags
+    @param {string} name
+mixin stylesheet(name)
+    link(href=`../css/${name}.css` rel='stylesheet')
+
+//- **
+    name: script
+    description: Fast script tags
+    @param {string} name
+mixin script(name)
+    script(src=`../js/${name}.js`)

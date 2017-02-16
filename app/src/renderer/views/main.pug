@@ -1,0 +1,11 @@
+extends _extend
+
+block head
+    title Shot Lock
+    +stylesheet('main')
+    +script('main')
+
+block body
+    +window-header(title='Shot Lock')
+    .container
+        input(type='text', placeholder='path/to/screenshots')

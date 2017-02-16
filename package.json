@@ -1,55 +1,29 @@
 {
-  "name": "shotlock",
-  "version": "1.0.0",
-  "description": "Take screenshots locked at a specific region of your computer.",
-  "main": "index.js",
+  "repository": "LeonBlade/shotlock",
+  "author": "James Stine <Leon.Blade@gmail.com>",
+  "license": "MIT",
   "scripts": {
-    "test": "xo",
-    "build": "npm run test && gulp build",
+    "build": "gulp build",
     "dev": "gulp dev",
     "app": "electron app",
     "start": "npm run app",
     "dist": "npm run build && build",
     "pack": "npm run build && build --dir"
   },
-  "author": "James Stine",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/LeonBlade/shotlock.git"
-  },
   "dependencies": {},
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.23.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.23.0",
-    "cssnano": "^3.10.0",
     "del": "^2.2.2",
-    "eightpoint": "0.0.1",
+    "electron-builder": "^13.6.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-babel": "^6.1.2",
-    "gulp-postcss": "^6.3.0",
+    "gulp-inject-svg": "^0.1.9",
     "gulp-pug": "^3.2.0",
-    "postcss": "^5.2.12",
-    "postcss-import": "^9.1.0",
-    "postcss-simple-vars": "^3.0.0",
-    "xo": "^0.17.1"
-  },
-  "xo": {
-    "space": 4,
-    "esnext": true,
-    "envs": [
-      "node",
-      "browser"
-    ],
-    "rules": {
-      "import/no-extraneous-dependencies": 0,
-      "import/named": 0,
-      "import/default": 0
-    },
-    "ignores": [
-      "app/dist/**"
-    ]
+    "gulp-sass": "^3.1.0",
+    "menubar": "^5.2.3",
+    "sass-module-importer": "^1.4.0"
   },
   "babel": {
     "plugins": [

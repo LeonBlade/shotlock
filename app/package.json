@@ -1,0 +1,19 @@
+{
+  "name": "shotlock",
+  "version": "1.0.0",
+  "description": "Take screenshots locked at a specific region of your computer.",
+  "author": "James Stine <Leon.Blade@gmail.com>",
+  "license": "MIT",
+  "main": "dist/main/index.js",
+  "repository": "LeonBlade/shotlock",
+  "bugs": {
+    "url": "https://github.com/leonblade/shotlock/issues"
+  },
+  "homepage": "https://github.com/leonblade/shotlock#readme",
+  "xo": false,
+  "dependencies": {
+    "eightpoint": "0.0.1",
+    "electron-settings": "^2.2.2",
+    "execa": "^0.6.0"
+  }
+}

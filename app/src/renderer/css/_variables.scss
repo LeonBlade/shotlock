@@ -1,0 +1,36 @@
+/*
+    Styling Variables ✏️
+    ----
+    - Stylesheet Partial
+*/
+
+/* Colors */
+$gray-lighter:          #D7D7D7;
+$gray-light:            #919191;
+$gray-medium:           #545454;
+$gray:                  #414141;
+$gray-dark:             #2D2D2D;
+$gray-darker:           #222222;
+
+$red:                   #FF6159;
+$green:                 #28CA42;
+$blue:                  #3B99FC;
+$blue-dark:             #2D91FC;
+
+$traffic-light-red:     #BF4942;
+
+/* Typography */
+$font-size-default:     1.4rem;
+
+/* Backgrounds */
+$background-primary:    $gray-darker;
+$background-secondary:  $gray-dark;
+$background-light:      white;
+
+/* Typography */
+$color-primary:         $gray-lighter;
+$color-secondary:       white;
+$color-dark:            $gray-dark;
+
+/* Borders */
+$window-border-radius:  5px;

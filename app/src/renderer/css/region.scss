@@ -1,0 +1,34 @@
+@import 'vendor/_eightpoint.min';
+@import '_helpers';
+
+html, body, .content {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+}
+
+.window-dragger {
+    @extend .webkit-drag;
+    &:active {
+        cursor: -webkit-grabbing;
+    }
+}
+
+rect.stroke-black {
+    stroke: black;
+    fill: none;
+    stroke-width: 2px;
+}
+
+rect.stroke-white {
+    stroke: white;
+    fill: none;
+    stroke-width: 2px;
+    stroke-dasharray: 4;
+}
