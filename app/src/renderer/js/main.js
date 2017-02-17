@@ -1,6 +1,8 @@
 import { ipcRenderer, remote, shell } from 'electron';
 const { app, dialog, getCurrentWindow } = remote;
 
+require('electron').webFrame.setZoomLevelLimits(1, 1);
+
 // NOTE: paths relative to the dist directory
 import { handleTrafficLightsClicks, $ } from '../js/utils';
 import keybind from '../js/keybind';

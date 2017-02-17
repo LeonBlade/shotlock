@@ -9,9 +9,12 @@ input, .input {
     width: 80px;
     font-size: 1.2rem;
     height: 3rem;
-    line-height: 2.3rem;
+    line-height: 3rem;
     cursor: pointer;
     &:focus {
         border-color: $grellow;
+    }
+    &.keybind:focus {
+        color: $gray-lighter;
     }
 }

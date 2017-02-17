@@ -1,6 +1,7 @@
 import path from 'path';
 import execa from 'execa';
 import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron';
+import electronLocalShortcut from 'electron-localshortcut';
 import * as settings from '../common/settings-manager';
 
 let mainWindow;
@@ -48,6 +49,14 @@ app.on('ready', () => {
 
     // add the settings into the app object
     app.settings = settings;
+
+    console.log('cmd+shift+4',electronLocalShortcut.isRegistered('Command+Shift+4'));
+    console.log('cmd+-',electronLocalShortcut.isRegistered('Command+-'));
+    console.log('cmd+shift+t',electronLocalShortcut.isRegistered('Command+Shift+T'));
+
+    console.log('cmd+shift+4',globalShortcut.isRegistered('Command+Shift+4'));
+    console.log('cmd+-',globalShortcut.isRegistered('Command+-'));
+    console.log('cmd+shift+t',globalShortcut.isRegistered('Command+Shift+T'));
 
     // main screenshot function
     const ret = globalShortcut.register(settings.get('shortcut'), () => {
