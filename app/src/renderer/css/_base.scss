@@ -3,12 +3,14 @@
 
 body {
     color: $color-secondary;
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue";
+    font-family: "-apple-system", "BlinkMacSystemFont", "Helvetica Neue";
     overflow: hidden;
     letter-spacing: -.010rem;
     border-radius: 5px;
     overflow: hidden;
     font-size: 1.4rem;
+    -webkit-user-select: none;
+    cursor: default;
 }
 
 .container {
@@ -28,7 +30,7 @@ body {
 }
 
 .content {
-    background-color: $background-primary;
+    background-color: black;
     display: flex;
     flex-direction: column;
     overflow: hidden;

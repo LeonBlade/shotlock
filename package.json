@@ -16,13 +16,17 @@
     "babel-core": "^6.23.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.23.0",
     "del": "^2.2.2",
+    "electron": "^1.4.15",
     "electron-builder": "^13.6.0",
+    "electron-settings": "^2.2.2",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-babel": "^6.1.2",
     "gulp-inject-svg": "^0.1.9",
     "gulp-pug": "^3.2.0",
     "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.4.1",
     "menubar": "^5.2.3",
+    "object-path": "^0.11.3",
     "sass-module-importer": "^1.4.0"
   },
   "babel": {

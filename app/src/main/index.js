@@ -1,38 +1,56 @@
 import path from 'path';
 import execa from 'execa';
 import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron';
+import * as settings from '../common/settings-manager';
 
 let mainWindow;
 
 function createWindow() {
+    // get x and y from settings
+    const { x, y } = settings.get('mainWindow');
+
     // create the main window
     mainWindow = new BrowserWindow({
+        x,
+        y,
         width: 320,
         height: 200,
-        title: 'Shot Lock',
+        title: 'ShotLock',
         frame: false,
         resizable: false,
-        preloadWindow: true,
-        hasShadow: true,
-        background: '#222'
+        show: false,
+        backgroundColor: '#000'
     });
 
     // load the URL for the main window
     mainWindow.loadURL(`file://${__dirname}/../renderer/views/main.html`);
 
+    // display when ready to show
+    mainWindow.once('ready-to-show', mainWindow.show);
+
     // when the window gets closed
-    mainWindow.on('closed', () => {
-        mainWindow = null;
+    mainWindow.on('close', () => {
+        // get bounds from main window
+        const bounds = mainWindow.getBounds();
+        // set x and y in volatile settings
+        settings.set('mainWindow.x', bounds.x, true);
+        settings.set('mainWindow.y', bounds.y, true);
     });
+
+    // set the window to null
+    mainWindow.on('closed', () => { mainWindow = null; });
 }
 
 // when the application is ready create window
 app.on('ready', () => {
-    // create main window
+    // create main widnow
     createWindow();
 
+    // add the settings into the app object
+    app.settings = settings;
+
     // main screenshot function
-    const ret = globalShortcut.register('Command+Shift+5', () => {
+    const ret = globalShortcut.register(settings.get('shortcut'), () => {
         const { x, y, width, height } = mainWindow.getBounds();
         mainWindow.hide();
         execa('screencapture', [ '-t', 'jpg', `-R${x},${y},${width},${height}`, '/Users/LeonBlade/Desktop/test.jpg' ]).then(() => {
@@ -43,16 +61,14 @@ app.on('ready', () => {
 
 // when all windows close
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
+    if (process.platform !== 'darwin')
         app.quit();
-    }
 });
 
-// when activating the app
+// emulate macOS functionality
 app.on('activate', () => {
-    if (mainWindow === null) {
+    if (mainWindow === null)
         createWindow();
-    }
 });
 
 // when the application will close
@@ -63,6 +79,5 @@ app.on('will-quit', () => {
 
 // ipc main stuff
 ipcMain.on('close-window', event => {
-    const window = BrowserWindow.fromWebContents(event.sender);
-    window.close();
+    BrowserWindow.fromWebContents(event.sender).close();
 });

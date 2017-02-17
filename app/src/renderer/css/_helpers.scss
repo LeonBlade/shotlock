@@ -6,3 +6,9 @@
 
 /* hide element */
 .hidden { display: none !important; }
+
+/* non selecting text */
+.txt {
+    -webkit-user-select: none !important;
+    cursor: default !important;
+}

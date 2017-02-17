@@ -3,7 +3,9 @@
 
 .window-header {
     @extend .webkit-drag;
-    background: $gray;
+    -webkit-app-region: drag;
+    cursor: -webkit-drag;
+    background: black;
     width: 100%;
     .window__title {
         color: white;

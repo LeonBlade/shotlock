@@ -1,11 +1,22 @@
 extends _extend
 
 block head
-    title Shot Lock
+    title ShotLock
     +stylesheet('main')
     +script('main')
 
 block body
-    +window-header(title='Shot Lock')
+    +window-header(title='ShotLock')
     .container
-        input(type='text', placeholder='path/to/screenshots')
+        .input-group
+            .label-group
+                .label-text Save to...
+                .label-content.screenshot-location
+            .action
+                button.button-secondary.choose-location-btn Choose
+        .input-group
+            .label-group
+                .label-text Keyboard Shortcut
+                .label-content Shortcut to take screenshots
+            .action
+                input(type='text', value='⌘⇧5', readonly).keybind

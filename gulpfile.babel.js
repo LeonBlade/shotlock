@@ -1,10 +1,13 @@
 import {src, dest, watch as watchSrc, series, parallel} from 'gulp';
-import babel from 'gulp-babel';
-import del from 'del';
 import pug from 'gulp-pug';
+import babel from 'gulp-babel';
 import injectSvg from 'gulp-inject-svg';
+import sourcemaps from 'gulp-sourcemaps';
+
 import sass from 'gulp-sass';
 import moduleImporter from 'sass-module-importer';
+
+import del from 'del';
 
 // directories
 const SRC_DIR = 'app/src';
@@ -40,7 +43,9 @@ export function views() {
 // css task
 export function styles() {
     return src(CSS_GLOB, { base: SRC_DIR })
+        .pipe(sourcemaps.init())
 		.pipe(sass({ importer: moduleImporter(), outputStyle: 'compressed' }).on('error', sass.logError))
+        .pipe(sourcemaps.write())
 		.pipe(dest(DIST_DIR));
 }
 

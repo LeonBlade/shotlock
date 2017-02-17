@@ -1,0 +1,13 @@
+@import '../_variables';
+
+.label-group {
+    * { display: block; }
+    align-content: center;
+    .label-text {
+        & + * {
+            font-size: 1.2rem;
+            color: $gray-lighter;
+        }
+    }
+    flex-grow: 1;
+}

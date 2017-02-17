@@ -2,14 +2,16 @@
 
 /* custom styled input tags */
 input, .input {
-    border-radius: 3px;
-    background: white;
-    border: 0;
-    height: 2.4rem;
-    padding: 0 0.8rem;
-    background-color: $gray-dark;
     color: white;
-    border: 1px solid $gray-medium;
-    transition: border-color .1s ease-in;
-    &:focus { border-color: $blue; }
+    background: transparent;
+    text-align: center;
+    border: 1px solid white;
+    width: 80px;
+    font-size: 1.2rem;
+    height: 3rem;
+    line-height: 2.3rem;
+    cursor: pointer;
+    &:focus {
+        border-color: $grellow;
+    }
 }
