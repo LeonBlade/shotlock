@@ -5,7 +5,7 @@ import { app, BrowserWindow, ipcMain, screen } from 'electron';
 import * as settings from '../common/settings-manager';
 import * as shortcut from '../common/shortcut-manager';
 
-let mainWindow;
+let mainWindow, regionWindow;
 
 const shortcuts = [];
 
@@ -120,3 +120,35 @@ ipcMain.on('update-shortcut', (event, accelerator) => {
 // disable and enable shortcuts
 ipcMain.on('disable-shortcuts', shortcut.disableAll);
 ipcMain.on('enable-shortcuts', shortcut.enableAll);
+
+// region stuff
+ipcMain.on('open-region', openRegionWindow);
+
+function openRegionWindow() {
+    // get saved region bounds
+    const { x, y, width, height } = settings.get('region');
+
+    // create new region window
+    regionWindow = new BrowserWindow({
+        x, y, width, height,
+        frame: false,
+        transparent: true,
+        hasShadow: false,
+        resizable: true,
+        alwaysOnTop: true
+    });
+
+    // load region view
+    regionWindow.loadURL(`file://${__dirname}/../renderer/views/region.html`);
+
+    // when the window gets closed
+    regionWindow.on('close', () => {
+        // get bounds from main window
+        const bounds = regionWindow.getBounds();
+        // set x and y in volatile settings
+        settings.set('region.x', bounds.x, true);
+        settings.set('region.y', bounds.y, true);
+        settings.set('region.width', bounds.width, true);
+        settings.set('region.height', bounds.height, true);
+    });
+}

@@ -17,17 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // element definitions
     const screenshotLocation = $('.screenshot-location');
     const chooseLocationButton = $('.choose-location-btn');
+    const regionButton = $('.region-btn');
     const shortcut = $('.keybind');
     const body = document.body;
 
     // clicking the choose button
-    chooseLocationButton.onclick = () => {
+    chooseLocationButton.addEventListener('click', () => {
         const directories = dialog.showOpenDialog(electronWindow, { properties: ['openDirectory'] });
         if (directories) {
             app.settings.set('outDir', directories[0]);
             setScreenshotLocation(directories[0]);
         }
-    };
+    });
 
     // used to set the screenshot location
     function setScreenshotLocation(value) {
@@ -51,5 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ipcRenderer.send('update-shortcut', accelerator);
         // re-enable all shortcuts
         ipcRenderer.send('enable-shortcuts');
+    });
+
+    // click on the region buton
+    regionButton.addEventListener('click', () => {
+        ipcRenderer.send('open-region');
     });
 });
