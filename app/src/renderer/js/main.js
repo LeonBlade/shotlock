@@ -39,6 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // set the screenshot location text to the one saved
     setScreenshotLocation(app.settings.get('outDir'));
 
+    // pull in the default keybind
+    shortcut.dataset.accelerator = app.settings.get('shortcut');
+
     // bind the keybind input
-    const bound = keybind(shortcut);
+    keybind(shortcut, () => {
+        const accelerator = shortcut.dataset.accelerator;
+        // update the settings
+        app.settings.set('shortcut', accelerator);
+    });
 });

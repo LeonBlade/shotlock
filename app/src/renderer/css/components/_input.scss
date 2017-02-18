@@ -11,6 +11,7 @@ input, .input {
     height: 3rem;
     line-height: 3rem;
     cursor: pointer;
+    transition: color, border-color .2s ease;
     &:focus {
         border-color: $grellow;
     }
