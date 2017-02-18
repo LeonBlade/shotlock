@@ -1,10 +1,13 @@
 import path from 'path';
-import execa from 'execa';
-import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron';
-import electronLocalShortcut from 'electron-localshortcut';
+import * as helper from '../common/helper';
+import moment from 'moment';
+import { app, BrowserWindow, ipcMain, screen } from 'electron';
 import * as settings from '../common/settings-manager';
+import * as shortcut from '../common/shortcut-manager';
 
 let mainWindow;
+
+const shortcuts = [];
 
 function createWindow() {
     // get x and y from settings
@@ -15,7 +18,7 @@ function createWindow() {
         x,
         y,
         width: 320,
-        height: 200,
+        height: 250,
         title: 'ShotLock',
         frame: false,
         resizable: false,
@@ -50,23 +53,38 @@ app.on('ready', () => {
     // add the settings into the app object
     app.settings = settings;
 
-    console.log('cmd+shift+4',electronLocalShortcut.isRegistered('Command+Shift+4'));
-    console.log('cmd+-',electronLocalShortcut.isRegistered('Command+-'));
-    console.log('cmd+shift+t',electronLocalShortcut.isRegistered('Command+Shift+T'));
-
-    console.log('cmd+shift+4',globalShortcut.isRegistered('Command+Shift+4'));
-    console.log('cmd+-',globalShortcut.isRegistered('Command+-'));
-    console.log('cmd+shift+t',globalShortcut.isRegistered('Command+Shift+T'));
-
     // main screenshot function
-    const ret = globalShortcut.register(settings.get('shortcut'), () => {
-        const { x, y, width, height } = mainWindow.getBounds();
-        mainWindow.hide();
-        execa('screencapture', [ '-t', 'jpg', `-R${x},${y},${width},${height}`, '/Users/LeonBlade/Desktop/test.jpg' ]).then(() => {
-            mainWindow.show();
-        });
-    })
+    registerShortcut(settings.get('shortcut'));
 });
+
+// regsiter screenshot shortcut
+function registerShortcut(accelerator) {
+    shortcut.register('take-screenshot', accelerator, takeScreenshot);
+}
+
+function takeScreenshot() {
+    // get properties from mainwindow bounds
+    // TODO: do this for the region window
+    let { x, y, width, height } = settings.get('region');
+    const screenSize = screen.getPrimaryDisplay().workAreaSize;
+    if (x == 'center')
+        x = Math.round((screenSize.width / 2) - (width / 2));
+    if (y == 'center')
+        y = Math.round((screenSize.height / 2) - (height / 2));
+
+    const ext = 'jpg';
+    const output = path.resolve(settings.get('outDir'), getMomentFilename(ext));
+
+    // capture the screen
+    helper.takeScreenshot({ x, y, width, height }, ext, output, () => {
+        helper.playSound('Grab');
+    });
+}
+
+// Screen Shot 2017-02-18 at 12.26.00 AM
+function getMomentFilename(extension) {
+    return `Screen Shot ${moment().format('YYYY-MM-DD')} at ${moment().format('h.mm.ss A')}.${extension}`;
+}
 
 // when all windows close
 app.on('window-all-closed', () => {
@@ -83,10 +101,22 @@ app.on('activate', () => {
 // when the application will close
 app.on('will-quit', () => {
     // unregister all shortcuts
-    globalShortcut.unregisterAll();
+    shortcut.unregisterAll();
 });
 
 // ipc main stuff
 ipcMain.on('close-window', event => {
     BrowserWindow.fromWebContents(event.sender).close();
 });
+
+// update shortcut
+ipcMain.on('update-shortcut', (event, accelerator) => {
+    // unregister old
+    shortcut.unregister('take-screenshot');
+    // register new
+    registerShortcut(accelerator);
+});
+
+// disable and enable shortcuts
+ipcMain.on('disable-shortcuts', shortcut.disableAll);
+ipcMain.on('enable-shortcuts', shortcut.enableAll);

@@ -1,4 +1,4 @@
-import { remote } from 'electron';
+import { remote, ipcRenderer } from 'electron';
 const { app } = remote;
 import { htmlEncode } from 'htmlencode';
 
@@ -92,6 +92,9 @@ function bind(element, callback) {
         cacheValue = element.value;
         cacheAccelerator = element.dataset.accelerator;
         element.value = '';
+        element.dataset.accelerator = '';
+        // disable all shortcuts temporarily
+        ipcRenderer.send('disable-shortcuts');
     });
 
     element.addEventListener('blur', () => {
@@ -153,7 +156,6 @@ function createAccelerator(keyEvent) {
  */
 function parseAccelerator(value) {
     const parts = value.split('+');
-    console.log(value, parts);
     let keyCode, ctrlKey, altKey, shiftKey, metaKey;
     for (let part of parts) {
         const _part = part.toLowerCase();

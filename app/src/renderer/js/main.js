@@ -47,5 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const accelerator = shortcut.dataset.accelerator;
         // update the settings
         app.settings.set('shortcut', accelerator);
+        // update the shortcut
+        ipcRenderer.send('update-shortcut', accelerator);
+        // re-enable all shortcuts
+        ipcRenderer.send('enable-shortcuts');
     });
 });
